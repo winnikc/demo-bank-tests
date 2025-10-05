@@ -2,7 +2,15 @@
   "name": "demo-bank-tests",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "run-prettier": "npx prettier --write .",
+    "test:pulpit": "npm run test tests/pulpit.spec.ts",
+    "test:pulpit:headed": "npm run test tests/pulpit.spec.ts -- --headed",
+    "test:login": "npm run test tests/login.spec.ts",
+    "run:codegen": "npx playwright codegen https://demo-bank.vercel.app/"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

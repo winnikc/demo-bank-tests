@@ -54,7 +54,8 @@
   - set rules in `prettierrc.json`
     ```
     {
-        "singleQuote": true
+        "singleQuote": true,
+        "endOfLine": "auto"
     }
     ```
 - run Prettier
