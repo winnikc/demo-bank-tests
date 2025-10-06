@@ -1,13 +1,14 @@
 import { test, expect } from "@playwright/test";
-
-//Arrange
-const userName: string = "test1234";
-const userPwd: string = "Test2025";
-const incorrectUser: string = "tester";
-const incorrectPwd: string = "1234";
-const messageEnding: string = "ma min. 8 znaków";
+import { incorrectPwd, incorrectUser, messageEnding, loginData } from "../test-data/login.data";
 
 test.describe("User login to Demobank", () => {
+//Arrange
+const userName: string = loginData.userId;
+const userPwd: string = loginData.userPassword;
+// const incorrectUser: string = "tester";
+// const incorrectPwd: string = "1234";
+// const messageEnding: string = "ma min. 8 znaków";
+
   test.beforeEach("before test hook", async ({ page }) => {
     await page.goto("");
   });
