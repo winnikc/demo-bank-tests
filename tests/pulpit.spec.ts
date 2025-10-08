@@ -15,6 +15,7 @@ test.describe("Pulpit test", () => {
     await loginPage.loginField.fill(userName);
     await loginPage.passwordInput.fill(userPwd);
     await loginPage.loginButton.click();
+    
   });
 
   test("Przelew", async ({ page }) => {
@@ -26,6 +27,7 @@ test.describe("Pulpit test", () => {
     const pulpitPage = new PulpitPage(page);
     const paymentPage = new PaymentPage(page);
 
+    await expect(pulpitPage.userField).toHaveText("Jan Demobankowy");
     await pulpitPage.transferReceiver.selectOption(receiverId);
     await pulpitPage.transferAmountField.fill(amount);
     await pulpitPage.transferTitleField.fill(transferTitle);
@@ -43,6 +45,7 @@ test.describe("Pulpit test", () => {
     const pulpitPage = new PulpitPage(page);
     const paymentPage = new PaymentPage(page);
 
+    await expect(pulpitPage.userField).toHaveText("Jan Demobankowy");
     await pulpitPage.topupReceiver.selectOption(phoneNumberOption);
     await pulpitPage.topupAmount.fill(amount);
     await pulpitPage.topupAgreement.click();

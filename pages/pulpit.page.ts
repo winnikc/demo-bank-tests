@@ -11,6 +11,7 @@ export class PulpitPage {
   topupAgreement: Locator;
   executeButton: Locator;
   messageField: Locator;
+  userField: Locator;
 
   constructor(private page: Page) {
     this.paymentLink = this.page.locator(".i-nav-payments");
@@ -25,5 +26,6 @@ export class PulpitPage {
     );
     this.executeButton = this.page.locator("#execute_phone_btn");
     this.messageField = this.page.getByTestId("message-text");
+    this.userField = this.page.getByTestId("user-name");
   }
 }
