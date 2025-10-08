@@ -1,34 +1,37 @@
 import { test, expect } from "@playwright/test";
 import { loginData } from "../test-data/login.data";
+import { LoginPage } from "../pages/login.page";
+import { PaymentPage } from "../pages/payment.page";
+import { PulpitPage } from "../pages/pulpit.page";
 
 test.describe("Pulpit test", () => {
   const userName: string = loginData.userId;
   const userPwd: string = loginData.userPassword;
 
   test.beforeEach("Before test hook", async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const pulpitPage = new PulpitPage(page);
+
     await page.goto("");
-    await page.getByTestId("login-input").fill(userName);
-    await page.getByTestId("password-input").fill(userPwd);
-    await page.getByTestId("login-button").click();
-    await page.getByRole("link", { name: "płatności" }).click();
+    await loginPage.loginField.fill(userName);
+    await loginPage.passwordInput.fill(userPwd);
+    await loginPage.loginButton.click();
+    await pulpitPage.paymentLink.click();
   });
 
   test("simple payment", async ({ page }) => {
+    const paymentPage = new PaymentPage(page);
     const transferReceiver = "Jan Nowak";
     const transferAccount = "12 3456 7890 1234 5678 9012 3456";
     const transferAmount = "222";
     const expectedMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
 
-    await page.getByTestId("transfer_receiver").fill(transferReceiver);
-    await page.getByTestId("form_account_to").fill(transferAccount);
-    await page.getByTestId("form_amount").fill(transferAmount);
-    await page.getByRole("button", { name: "wykonaj przelew" }).click();
-    await page.getByTestId("close-button").click();
+    await paymentPage.transferReceiver.fill(transferReceiver);
+    await paymentPage.toField.fill(transferAccount);
+    await paymentPage.amountField.fill(transferAmount);
+    await paymentPage.executeButton.click();
+    await paymentPage.closeButton.click();
 
-    await expect(
-      page.locator('#show_messages')
-    ).toHaveText(
-      `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`
-    );
+    await expect(paymentPage.paymentMessage).toHaveText(expectedMessage);
   });
 });

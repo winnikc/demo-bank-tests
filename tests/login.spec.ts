@@ -36,7 +36,7 @@ test.describe("User login to Demobank", () => {
     await loginPage.loginField.fill(incorrectUser);
     await loginPage.passwordInput.fill(userPwd);
 
-    await expect(page.getByTestId("error-login-id")).toHaveText(
+    await expect(loginPage.loginError).toHaveText(
       expectedMessage
     );
   });
@@ -48,10 +48,10 @@ test.describe("User login to Demobank", () => {
 
     await loginPage.loginField.fill(userName);
     await loginPage.passwordInput.fill(incorrectPwd);
-    await page.getByTestId("password-input").fill(incorrectPwd);
-    await page.getByTestId("password-input").blur();
+    // await page.getByTestId("password-input").fill(incorrectPwd);
+    await loginPage.passwordInput.blur();
 
-    await expect(page.getByTestId("error-login-password")).toHaveText(
+    await expect(loginPage.passwordError).toHaveText(
       expectedMessage
     );
   });
