@@ -7,15 +7,19 @@ import { PaymentPage } from "../pages/payment.page";
 test.describe("Pulpit test", () => {
   const userName: string = loginData.userId;
   const userPwd: string = loginData.userPassword;
+  let loginPage: LoginPage;
+  let pulpitPage: PulpitPage;
+  let paymentPage: PaymentPage;
 
   test.beforeEach("Before test hook", async ({ page }) => {
-    const loginPage = new LoginPage(page);
+    loginPage = new LoginPage(page);
+    pulpitPage = new PulpitPage(page);
+    paymentPage = new PaymentPage(page);
 
     await page.goto("");
     await loginPage.loginField.fill(userName);
     await loginPage.passwordInput.fill(userPwd);
     await loginPage.loginButton.click();
-    
   });
 
   test("Przelew", async ({ page }) => {
@@ -23,9 +27,6 @@ test.describe("Pulpit test", () => {
     const amount = "120";
     const transferTitle = "zwrot środków";
     const expectedMessage = `Przelew wykonany! Chuck Demobankowy - ${amount},00PLN - ${transferTitle}`;
-
-    const pulpitPage = new PulpitPage(page);
-    const paymentPage = new PaymentPage(page);
 
     await expect(pulpitPage.userField).toHaveText("Jan Demobankowy");
     await pulpitPage.transferReceiver.selectOption(receiverId);
@@ -41,9 +42,6 @@ test.describe("Pulpit test", () => {
     const amount: string = "50";
     const phoneNumberOption: string = "500 xxx xxx";
     const expectedMessage = `Doładowanie wykonane! ${amount},00PLN na numer ${phoneNumberOption}`;
-
-    const pulpitPage = new PulpitPage(page);
-    const paymentPage = new PaymentPage(page);
 
     await expect(pulpitPage.userField).toHaveText("Jan Demobankowy");
     await pulpitPage.topupReceiver.selectOption(phoneNumberOption);

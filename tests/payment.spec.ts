@@ -7,10 +7,12 @@ import { PulpitPage } from "../pages/pulpit.page";
 test.describe("Pulpit test", () => {
   const userName: string = loginData.userId;
   const userPwd: string = loginData.userPassword;
+  let loginPage: LoginPage;
+  let pulpitPage: PulpitPage;
 
   test.beforeEach("Before test hook", async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    const pulpitPage = new PulpitPage(page);
+    loginPage = new LoginPage(page);
+    pulpitPage = new PulpitPage(page);
 
     await page.goto("");
     await loginPage.loginField.fill(userName);
