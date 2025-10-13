@@ -17,9 +17,7 @@ test.describe("Pulpit test", () => {
     paymentPage = new PaymentPage(page);
 
     await page.goto("");
-    await loginPage.loginField.fill(userName);
-    await loginPage.passwordInput.fill(userPwd);
-    await loginPage.loginButton.click();
+    await loginPage.login(userName, userPwd);
   });
 
   test("Przelew", async ({ page }) => {

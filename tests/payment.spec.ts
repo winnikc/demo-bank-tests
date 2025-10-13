@@ -15,9 +15,7 @@ test.describe("Pulpit test", () => {
     pulpitPage = new PulpitPage(page);
 
     await page.goto("");
-    await loginPage.loginField.fill(userName);
-    await loginPage.passwordInput.fill(userPwd);
-    await loginPage.loginButton.click();
+    await loginPage.login(userName, userPwd);
     await expect(pulpitPage.userField).toHaveText("Jan Demobankowy");
     await pulpitPage.sideMenuComponent.paymentLink.click();
   });
