@@ -17,7 +17,7 @@ test.describe("Pulpit test", () => {
     await loginPage.passwordInput.fill(userPwd);
     await loginPage.loginButton.click();
     await expect(pulpitPage.userField).toHaveText("Jan Demobankowy");
-    await pulpitPage.paymentLink.click();
+    await pulpitPage.sideMenuComponent.paymentLink.click();
   });
 
   test("simple payment", async ({ page }) => {

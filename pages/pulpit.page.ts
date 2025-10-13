@@ -1,7 +1,8 @@
 import { Locator, Page } from "@playwright/test";
+import { SideMenuComponent } from "../components/side-menu.component";
 
 export class PulpitPage {
-  paymentLink: Locator;
+
   transferReceiver: Locator;
   transferAmountField: Locator;
   transferTitleField: Locator;
@@ -12,9 +13,11 @@ export class PulpitPage {
   executeButton: Locator;
   messageField: Locator;
   userField: Locator;
+  sideMenuComponent: SideMenuComponent
 
   constructor(private page: Page) {
-    this.paymentLink = this.page.locator(".i-nav-payments");
+    this.sideMenuComponent = new SideMenuComponent(this.page)
+
     this.transferReceiver = this.page.locator("#widget_1_transfer_receiver");
     this.transferAmountField = this.page.locator("#widget_1_transfer_amount");
     this.transferTitleField = this.page.locator("#widget_1_transfer_title");

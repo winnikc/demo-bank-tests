@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import { SideMenuComponent } from "../components/side-menu.component";
 
 export class PaymentPage {
   transferReceiver: Locator;
@@ -7,8 +8,10 @@ export class PaymentPage {
   executeButton: Locator;
   closeButton: Locator;
   paymentMessage: Locator;
+  sideMenuComponent: SideMenuComponent;
 
   constructor(private page: Page) {
+    this.sideMenuComponent = new SideMenuComponent(this.page);
     this.transferReceiver = this.page.getByTestId("transfer_receiver");
     this.toField = this.page.getByTestId("form_account_to");
     this.amountField = this.page.getByTestId("form_amount");
