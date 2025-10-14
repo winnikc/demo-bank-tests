@@ -18,6 +18,8 @@
   `npx playwright test --headed`
 - view report  
   `npx playwright show-report`
+- run tests that have @login tag in them 
+  `npx playwright test --grep "@login"`
 
 ## Playwright Config modifications
 

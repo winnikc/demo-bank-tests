@@ -6,5 +6,7 @@ export const messageEnding: string = "ma min. 8 znaków";
 
 export const loginData = {
     userId : "test1234",
-    userPassword: 'Test2025'
+    userPassword: 'Test2025',
+    firstName: 'Jan',
+    lastName: 'Demobankowy'
 }

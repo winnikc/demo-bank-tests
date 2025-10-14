@@ -20,19 +20,29 @@ test.describe("Pulpit test", () => {
     await pulpitPage.sideMenuComponent.paymentLink.click();
   });
 
-  test("simple payment", async ({ page }) => {
-    const paymentPage = new PaymentPage(page);
-    const transferReceiver = "Jan Nowak";
-    const transferAccount = "12 3456 7890 1234 5678 9012 3456";
-    const transferAmount = "222";
-    const expectedMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
+  test(
+    "simple payment",
+    {
+      tag: ["@payment", "@integration"],
+      annotation: {
+        type: "documentation",
+        description: "https://google.com",
+      },
+    },
+    async ({ page }) => {
+      const paymentPage = new PaymentPage(page);
+      const transferReceiver = "Jan Nowak";
+      const transferAccount = "12 3456 7890 1234 5678 9012 3456";
+      const transferAmount = "222";
+      const expectedMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
 
-    await paymentPage.transferReceiver.fill(transferReceiver);
-    await paymentPage.toField.fill(transferAccount);
-    await paymentPage.amountField.fill(transferAmount);
-    await paymentPage.executeButton.click();
-    await paymentPage.closeButton.click();
+      await paymentPage.makeTransfer(
+        transferReceiver,
+        transferAccount,
+        transferAmount
+      );
 
-    await expect(paymentPage.paymentMessage).toHaveText(expectedMessage);
-  });
+      await expect(paymentPage.paymentMessage).toHaveText(expectedMessage);
+    }
+  );
 });

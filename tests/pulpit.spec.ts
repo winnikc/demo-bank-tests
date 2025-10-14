@@ -7,6 +7,7 @@ import { PaymentPage } from "../pages/payment.page";
 test.describe("Pulpit test", () => {
   const userName: string = loginData.userId;
   const userPwd: string = loginData.userPassword;
+  const userFullName: string = `${loginData.firstName} ${loginData.lastName}`;
   let loginPage: LoginPage;
   let pulpitPage: PulpitPage;
   let paymentPage: PaymentPage;
@@ -20,34 +21,36 @@ test.describe("Pulpit test", () => {
     await loginPage.login(userName, userPwd);
   });
 
-  test("Przelew", async ({ page }) => {
-    const receiverId = "2";
-    const amount = "120";
-    const transferTitle = "zwrot środków";
-    const expectedMessage = `Przelew wykonany! Chuck Demobankowy - ${amount},00PLN - ${transferTitle}`;
+  test(
+    "Quick payment with correct data",
+    { tag: ["@pulpit", "@integration"]},
+    async ({ page }) => {
+      const receiverId = "2";
+      const amount = "120";
+      const transferTitle = "zwrot środków";
+      const expectedMessage = `Przelew wykonany! Chuck Demobankowy - ${amount},00PLN - ${transferTitle}`;
 
-    await expect(pulpitPage.userField).toHaveText("Jan Demobankowy");
-    await pulpitPage.transferReceiver.selectOption(receiverId);
-    await pulpitPage.transferAmountField.fill(amount);
-    await pulpitPage.transferTitleField.fill(transferTitle);
-    await pulpitPage.executebutton.click();
-    await paymentPage.closeButton.click();
+      await pulpitPage.checkLoggedUser(userFullName);
+      await pulpitPage.transferMoney(receiverId, amount, transferTitle);
+      await paymentPage.clickCloseButton();
 
-    await expect(paymentPage.paymentMessage).toHaveText(expectedMessage);
-  });
+      await pulpitPage.checkPaymentMessage(expectedMessage);
+    }
+  );
 
-  test("successful mobile top-up", async ({ page }) => {
-    const amount: string = "50";
-    const phoneNumberOption: string = "500 xxx xxx";
-    const expectedMessage = `Doładowanie wykonane! ${amount},00PLN na numer ${phoneNumberOption}`;
+  test(
+    "successful mobile top-up",
+    { tag: ["@pulpit", "@integration"] },
+    async ({ page }) => {
+      const amount: string = "50";
+      const phoneNumberOption: string = "500 xxx xxx";
+      const expectedMessage = `Doładowanie wykonane! ${amount},00PLN na numer ${phoneNumberOption}`;
 
-    await expect(pulpitPage.userField).toHaveText("Jan Demobankowy");
-    await pulpitPage.topupReceiver.selectOption(phoneNumberOption);
-    await pulpitPage.topupAmount.fill(amount);
-    await pulpitPage.topupAgreement.click();
-    await pulpitPage.executeButton.click();
-    await paymentPage.closeButton.click();
+      await pulpitPage.checkLoggedUser(userFullName);
+      await pulpitPage.makeTopupPayment(phoneNumberOption, amount);
+      await paymentPage.clickCloseButton();
 
-    await expect(pulpitPage.messageField).toHaveText(expectedMessage);
-  });
+      await pulpitPage.checkPaymentMessage(expectedMessage);
+    }
+  );
 });

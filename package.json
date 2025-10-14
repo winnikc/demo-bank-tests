@@ -9,7 +9,8 @@
     "test:pulpit": "npm run test tests/pulpit.spec.ts",
     "test:pulpit:headed": "npm run test tests/pulpit.spec.ts -- --headed",
     "test:login": "npm run test tests/login.spec.ts",
-    "run:codegen": "npx playwright codegen https://demo-bank.vercel.app/"
+    "run:codegen": "npx playwright codegen https://demo-bank.vercel.app/",
+    "test:payment": "npx playwright test --grep \"@payment\""
   },
   "keywords": [],
   "author": "",
