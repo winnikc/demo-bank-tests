@@ -5,6 +5,7 @@ import { PulpitPage } from "../pages/pulpit.page";
 import { PaymentPage } from "../pages/payment.page";
 
 test.describe("Pulpit test", () => {
+  test.describe.configure({ retries: 3});
   const userName: string = loginData.userId;
   const userPwd: string = loginData.userPassword;
   const userFullName: string = `${loginData.firstName} ${loginData.lastName}`;
@@ -23,7 +24,13 @@ test.describe("Pulpit test", () => {
 
   test(
     "Quick payment with correct data",
-    { tag: ["@pulpit", "@integration"]},
+    {
+      tag: ["@pulpit", "@integration"],
+      annotation: {
+        type: "documentation",
+        description: "https://jaktestowac.pl/course/playwright-wprowadzenie",
+      },
+    },
     async ({ page }) => {
       const receiverId = "2";
       const amount = "120";

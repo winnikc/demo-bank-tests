@@ -78,3 +78,13 @@ test.describe("Group description", () => {});
 ```
 
 - running one test: `test.only`
+
+- repeateing tests
+`npx playwright test --repeat-each=20`
+
+-add retries to tests
+`  test.describe.configure({ retries: 3});`
+
+## Playwright mcp server snippets
+- running  mcp server from terminal
+`npx @playwright/mcp@latest --port 8931`
